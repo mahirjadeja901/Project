@@ -185,5 +185,28 @@ st.markdown("---")
 st.caption(
     "The model is defined parametrically from the given dimensions. Import the CSV/JSON into your CAD or CAM scripts (e.g., Fusion 360 API) to generate DXF/3D geometry."
 )
+import streamlit as st
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
+import pandas as pd
+import numpy as np
+import io
+import json
+
+# Page configuration
+st.set_page_config(page_title="Agricultural Robot Design Suite", layout="wide", initial_sidebar_state="expanded")
+
+# Sidebar navigation
+st.sidebar.markdown("# 🌾 Agricultural Robot Design Suite")
+page = st.sidebar.radio("Select Tool", options=["🛞 Motor Selector", "📐 Flat Patterns", "📋 Documentation"])
+
+# Motor database (shared)
+motor_database = {
+    "DC_Gear_Motor_12V_100RPM_50W": {
+        "type": "DC Gear Motor", "voltage": 12, "power": 50, "torque": 4.2, "rpm": 100, 
+        "current": 5, "model": "12V 100RPM 50W", "applications": ["wheels", "ploughing"], "approx_cost": 400
+    },
+    "DC_Gear_Motor
+
 
 
