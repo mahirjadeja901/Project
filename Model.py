@@ -1,5 +1,6 @@
-# app.py
-import streamlit as st # type: ignore
+# Model.py  (Streamlit app)
+
+import streamlit as st  # type: ignore
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import pandas as pd
@@ -9,7 +10,7 @@ import json
 st.set_page_config(page_title="Agricultural Robot Flat Patterns", layout="wide")
 
 st.title("🔧 Agricultural Robot Chassis - Flat Patterns")
-st.write("Detailed cutting patterns for 18‑gauge steel sheet fabrication.")  # [file:1]
+st.write("Detailed cutting patterns for 18‑gauge steel sheet fabrication.")
 
 # --- Sidebar: component selection ---
 components = [
@@ -21,15 +22,15 @@ components = [
     "Solar Panel Frame",
     "Battery Tray",
 ]
-component = st.sidebar.selectbox("Select Component", components)  # [file:1]
+component = st.sidebar.selectbox("Select Component", components)
 
 # --- Sidebar: dimensions input ---
-st.sidebar.markdown("### Custom Dimensions (mm)")  # [file:1]
+st.sidebar.markdown("### Custom Dimensions (mm)")
 length = st.sidebar.number_input("Length (mm)", min_value=50.0, max_value=3000.0, value=600.0)
 width = st.sidebar.number_input("Width (mm)", min_value=50.0, max_value=3000.0, value=400.0)
-thickness = 1.2  # 18‑gauge steel (approx) [file:1]
+thickness = 1.2  # 18‑gauge steel (approx)
 
-# Simple component-specific parameter (you can later make it more complex)
+# Simple component-specific parameter
 if component == "Base Chassis Platform":
     corner_radius = 20
 elif component == "Wheel Mounting Bracket":
@@ -79,8 +80,8 @@ with col1:
     fig, ax = plt.subplots()
 
     # Plate
-    plate = Rectangle((0, 0), length, width, fill=False, linewidth=2)
-    ax.add_patch(plate)
+    plate_rect = Rectangle((0, 0), length, width, fill=False, linewidth=2)
+    ax.add_patch(plate_rect)
 
     # Bend lines
     for bend in model["features"]["bend_lines"]:
@@ -104,16 +105,16 @@ with col2:
     st.subheader("Fabrication Notes")
     st.markdown(
         f"""
-        **Component:** {component}  
+**Component:** {component}  
 
-        - Material: 18‑gauge (1.2 mm) cold‑rolled mild steel.  
-        - Bend allowance: Add 1.9 mm to each 90° bend.  
-        - Hole clearances: Drill undersized, then ream to final size.  
-        - Tolerances: ±0.5 mm for cuts, ±1° for bends.  
-        - Edge treatment: Deburr all edges with file or grinder.  
-        - Nesting: Optimized for 4'×8' sheet where possible.  
-        """
-    )  # [file:1]
+- Material: 18‑gauge (1.2 mm) cold‑rolled mild steel.  
+- Bend allowance: Add 1.9 mm to each 90° bend.  
+- Hole clearances: Drill undersized, then ream to final size.  
+- Tolerances: ±0.5 mm for cuts, ±1° for bends.  
+- Edge treatment: Deburr all edges with file or grinder.  
+- Nesting: Optimized for 4'×8' sheet where possible.  
+"""
+    )
 
     st.markdown("### Generated Model (Parametric Data)")
     st.json(model)
@@ -182,5 +183,7 @@ with col2:
 
 st.markdown("---")
 st.caption(
-    "The model is defined parametrically from the given dimensions. Import the CSV/JSON into your CAD or CAM scripts to generate DXF/3D geometry."
-)  # [file:1]
+    "The model is defined parametrically from the given dimensions. Import the CSV/JSON into your CAD or CAM scripts (e.g., Fusion 360 API) to generate DXF/3D geometry."
+)
+
+
